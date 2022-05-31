@@ -1,0 +1,66 @@
+{
+    "name": "@axa/auth-worker",
+    "version": "1.0.0",
+    "files": [
+        "dist",
+        "README.md",
+        "AuthWorkerFlow.png"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "sideEffects": [
+        "dist/main/main.umd.js"
+    ],
+    "main": "./dist/main/main.umd.js",
+    "module": "./dist/main/main.es.js",
+    "exports": {
+        ".": {
+            "import": "./dist/main/main.es.js",
+            "require": "./dist/main/main.es.js"
+        }
+    },
+    "types": "dist/types/main/index.d.ts",
+    "bin": {
+        "init": "bin/init.js"
+    },
+    "scripts": {
+        "start": "concurrently \"yarn run build:dev\"  \"vite serve dev\"",
+        "build": "tsc --declaration --emitDeclarationOnly --outDir ./dist/types && concurrently \"vite build -c conf/vite.config.js\" \"vite build -c conf/vite.sw.config.js\"",
+        "build:dev": "concurrently \"vite build -c conf/vite.config.dev.js --watch\" \"vite build -c conf/vite.sw.config.dev.js\" --watch",
+        "serve": "vite preview",
+        "prepare": "husky install",
+        "eslint": "eslint --fix",
+        "pretty-quick": "pretty-quick --staged",
+        "release": "standard-version",
+        "postinstall": "node bin/init.js copy"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "standard-version": {
+        "skip": {
+            "commit": true
+        }
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^15.0.0",
+        "@commitlint/config-conventional": "^15.0.0",
+        "concurrently": "^6.3.0",
+        "cross-env": "^7.0.3",
+        "eslint": "^7.32.0",
+        "husky": "^7.0.0",
+        "prettier": "^2.3.2",
+        "pretty-quick": "^3.1.1",
+        "standard-version": "^9.3.2",
+        "typescript": "^4.3.2",
+        "vite": "^2.6.4"
+    },
+    "dependencies": {
+        "@openid/appauth": "^1.3.1",
+        "chalk": "^4.1.2",
+        "localforage": "^1.9.0",
+        "yargs": "^17.1.0"
+    }
+}

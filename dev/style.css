@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(63, 63, 63);
+    font-family: monospace;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(43, 43, 43);
+    padding: 20px 30px;
+    border: 1px solid rgb(253, 197, 108);
+}
+
+/* codepen: https://codepen.io/canvasplay/pen/WXWobd*/
+
+body {
+    font-family: 'Work Sans', sans-serif;
+    background: #111;
+    text-align: center;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    border: 0.2em solid;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0.6;
+    color: #fff;
+}
+.button__text {
+    display: block;
+    padding: 1em 2em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.button__text:before {
+    content: attr(title);
+}
+.button__text--bis {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(-1em);
+    opacity: 0;
+}
+.button__mask {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    transform: translateX(-100%) rotate(45deg);
+    transition: all 0.3s;
+}
+
+.button:hover {
+    opacity: 1;
+}
+.button:hover .button__text {
+    -webkit-animation: fx-text 0.3s ease-out;
+    animation: fx-text 0.3s ease-out;
+}
+.button:hover .button__text--bis {
+    -webkit-animation: fx-text-bis 0.3s ease-out;
+    animation: fx-text-bis 0.3s ease-out;
+}
+.button:hover .button__mask {
+    -webkit-animation: fx-mask 0.3s ease-out;
+    animation: fx-mask 0.3s ease-out;
+}
+
+.button:active {
+    opacity: 1;
+    background: white;
+    color: inherit;
+}
+
+@-webkit-keyframes fx-mask {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes fx-mask {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+@-webkit-keyframes fx-text {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(1em);
+        opacity: 0;
+    }
+}
+@keyframes fx-text {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(1em);
+        opacity: 0;
+    }
+}
+@-webkit-keyframes fx-text-bis {
+    0% {
+        transform: translateX(-1em);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes fx-text-bis {
+    0% {
+        transform: translateX(-1em);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>SWs</title>
+        <script type="module">
+            import { start, getUserInfos } from './main.es.js';
+
+            window.start = start;
+            window.getUserInfos = getUserInfos;
+        </script>
+        <script type="text/javascript">
+            window.addEventListener('DOMContentLoaded', async () => {
+                const map = new Map();
+                map.set(
+                    [
+                        'https://jsonplaceholder.typicode.com',
+                        'https://api.instantwebtools.net',
+                    ],
+                    {
+                        openIdConnectProvider: 'https://accounts.google.com',
+                        clientId:
+                            '511828570984-7nmej36h9j2tebiqmpqh835naet4vci4.apps.googleusercontent.com',
+                        callbackRedirectUri:
+                            'http://localhost:3000/callback.html',
+                        scope: 'openid email',
+                    }
+                );
+
+                await start(map, { shouldLog: true });
+            });
+        </script>
+        <script type="text/javascript">
+            var myHeaders = new Headers();
+            myHeaders.append('test-custom-header', "i'm a custom header");
+            const testFetch = () => {
+                fetch('https://jsonplaceholder.typicode.com/todos/1', {
+                    method: 'GET',
+                    headers: myHeaders,
+                    mode: 'cors',
+                    cache: 'default',
+                });
+            };
+
+            const testFetchAlternate = () => {
+                fetch('https://api.instantwebtools.net/v1/airlines/1');
+            };
+
+            const testUserInfo = async () => {
+                const userinfos = await getUserInfos();
+                console.log(userinfos);
+            };
+        </script>
+
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <div class="centered">
+            <div style="display: flex; flex-direction: column">
+                <h1 style="color: white">
+                    Fetch and check your console to see some 🧙‍♂️
+                </h1>
+                <div class="button" onclick="testFetch()">
+                    <span class="button__mask"></span>
+                    <span class="button__text">Jsonplaceholder</span>
+                    <span class="button__text button__text--bis">Fetch 🚀</span>
+                </div>
+                <div class="button" onclick="testFetchAlternate()">
+                    <span class="button__mask"></span>
+                    <span class="button__text">api.instantwebtools</span>
+                    <span class="button__text button__text--bis">Fetch 🚀</span>
+                </div>
+                <div class="button" onclick="testUserInfo()">
+                    <span class="button__mask"></span>
+                    <span class="button__text">Test user info</span>
+                    <span class="button__text button__text--bis"
+                        >Test user info</span
+                    >
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
