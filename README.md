@@ -4,6 +4,12 @@ Auth-worker provides a service worker to easily manage Oidc authentication.
 
 After the setup and depending on the fetch request, the token will be automatically added in the header.
 
+<p align="center">
+    <img src="./demo.gif"
+     alt="Sample React Oicd"
+      />
+</p>
+
 ![workflow](AuthWorkerFlow.png 'AuthWorker Flow')
 
 ## Prerequisite
@@ -13,7 +19,9 @@ After the setup and depending on the fetch request, the token will be automatica
 -   Scope
 
 ## Usage
+
 :warning: Not on npm right now...
+
 ```npm
 npm install @axa-fr/auth-worker
 ```
@@ -38,11 +46,11 @@ The oidc configuration is based on a javascript map. The key is the list of all 
 
 ```javascript
 const map = new Map();
-map.set(["https://my.app/api"], {
-    openIdConnectProvider: "https://accounts.google.com",
-    clientId: "123456789",
-    callbackRedirectUri: "https://my.app/callback",
-    scope: "scope",
+map.set(['https://my.app/api'], {
+    openIdConnectProvider: 'https://accounts.google.com',
+    clientId: '123456789',
+    callbackRedirectUri: 'https://my.app/callback',
+    scope: 'scope',
 });
 await start(map, {
     swPath: '/oidcsw.js',
@@ -65,7 +73,8 @@ callback();
 
 ## Implementation
 
-You can look at the ``/dev`` folder for a simple usecase.
+You can look at the `/dev` folder for a simple usecase.
+
 ### React
 
 This is an example for an usage in a React project
@@ -87,7 +96,7 @@ const App = () => {
     const valueUseUser = useUser();
 
     useEffect(async () => {
-        ( async () => {
+        (async () => {
             const map = new Map();
             map.set([conf.apiUrl, conf.referentielMachineUrl], {
                 openIdConnectProvider: conf.oidc.openIdConnectProvider,
@@ -103,10 +112,8 @@ const App = () => {
                 },
             });
 
-        setIsLogged(true);
-
-        })()
-
+            setIsLogged(true);
+        })();
     }, []);
 
     return (
@@ -149,10 +156,10 @@ export default AuthenticationCallback;
 
 ### TODO
 
-- [ ] Easier setup for start (No map parameter on entry)
-- [ ] Support for custom (non oidc) provider
-- [ ] Add popular framework wrapper
-- [ ] Safari support ( dropping Broadcast Channel )
+-   [ ] Easier setup for start (No map parameter on entry)
+-   [ ] Support for custom (non oidc) provider
+-   [ ] Add popular framework wrapper
+-   [ ] Safari support ( dropping Broadcast Channel )
 
 ### Contributing
 
