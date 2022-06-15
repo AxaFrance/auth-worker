@@ -1,5 +1,5 @@
 {
-    "name": "@axa/auth-worker",
+    "name": "@axa-fr/auth-worker",
     "version": "1.0.0",
     "files": [
         "dist",
