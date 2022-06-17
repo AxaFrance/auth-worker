@@ -1,0 +1,28 @@
+name: Publish pre release
+
+on:
+    workflow_dispatch
+
+env:
+    NODE_VERSION: 16.x
+
+jobs:
+    publish:
+        if: github.repository_owner == 'AxaGuilDEv'
+        environment:
+            name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Use Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  registry-url: 'https://registry.npmjs.org'
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run build
+            - name: Publish pre release packages to npm
+              run: npm publish --registry https://registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} --tag beta
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
