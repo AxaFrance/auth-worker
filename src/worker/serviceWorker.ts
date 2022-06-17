@@ -17,8 +17,6 @@ const handleRequest = async (request: Request): Promise<Response> => {
             if (accessToken) {
                 const headers = new Headers();
                 headers.append('Authorization', `Bearer ${accessToken}`);
-                headers.append('Content-Type', 'application/json');
-                headers.append('Accept', 'application/json');
 
                 getHeaders(request.headers).forEach(([name, value]) => {
                     headers.append(name, value);

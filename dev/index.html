@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8" />
         <title>SWs</title>
@@ -32,7 +33,7 @@
         </script>
         <script type="text/javascript">
             var myHeaders = new Headers();
-            myHeaders.append('test-custom-header', "i'm a custom header");
+            myHeaders.append('test-custom-header', "I'm a custom header");
             const testFetch = () => {
                 fetch('https://jsonplaceholder.typicode.com/todos/1', {
                     method: 'GET',
@@ -74,11 +75,10 @@
                 <div class="button" onclick="testUserInfo()">
                     <span class="button__mask"></span>
                     <span class="button__text">Test user info</span>
-                    <span class="button__text button__text--bis"
-                        >Test user info</span
-                    >
+                    <span class="button__text button__text--bis">Test user info</span>
                 </div>
             </div>
         </div>
     </body>
+
 </html>
