@@ -7,7 +7,7 @@ on:
 
 env:
     NODE_VERSION: 16.x
-    APP_VERSION: ${{ GITHUB_REF_NAME }}
+    APP_VERSION: ${{github.ref_name}}
 
 jobs:
     publish:
