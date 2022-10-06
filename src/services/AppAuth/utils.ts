@@ -39,7 +39,7 @@ export const getConfigurationFromIssuer = async (
 };
 export const makeRedirectAuthorizationRequest = async (
     configuration: AuthorizationServiceConfiguration,
-    OidcConf: OidcConfiguration,
+    oidcConfiguration: OidcConfiguration,
     authReqhandler: WorkerRedirectRequestHandler,
     location: string
 ): Promise<string> => {
@@ -48,8 +48,8 @@ export const makeRedirectAuthorizationRequest = async (
         return '';
     }
 
-    const extras: StringMap = { prompt: 'consent', access_type: 'offline' };
-    const { clientId, callbackRedirectUri, scope } = OidcConf;
+    const authExtras: StringMap = { prompt: 'consent', access_type: 'offline' };
+    const { clientId, callbackRedirectUri, scope, extra } = oidcConfiguration;
 
     const request = new AuthorizationRequest(
         {
@@ -58,7 +58,7 @@ export const makeRedirectAuthorizationRequest = async (
             scope: scope,
             response_type: AuthorizationRequest.RESPONSE_TYPE_CODE,
             state: btoa(JSON.parse(location).href),
-            extras: extras,
+            extras: { ...authExtras, ...extra },
         },
         new WorkerCrypto()
     );
@@ -82,20 +82,22 @@ export const makeRefreshTokenRequest = async (
         return Promise.resolve(undefined);
     }
 
-    const extras: StringMap = {};
+    const refreshExtras: StringMap = {};
 
     if (codeVerifier) {
-        extras.code_verifier = codeVerifier;
+        refreshExtras.code_verifier = codeVerifier;
     }
+
+    const { clientId, callbackRedirectUri, extra } = oidcConfiguration;
 
     // use the code to make the token request.
     const request = new TokenRequest({
-        client_id: oidcConfiguration.clientId,
-        redirect_uri: oidcConfiguration.callbackRedirectUri,
+        client_id: clientId,
+        redirect_uri: callbackRedirectUri,
         grant_type: GRANT_TYPE_AUTHORIZATION_CODE,
         code: code,
         refresh_token: undefined,
-        extras: { ...extras, ...oidcConfiguration.extra },
+        extras: { ...refreshExtras, ...extra },
     });
 
     logger('makeRefreshTokenRequest', request);
@@ -116,13 +118,16 @@ export const performWithFreshTokens = async (
         logger('Missing refreshToken.');
         return Promise.reject('Missing refreshToken.');
     }
+
+    const { clientId, callbackRedirectUri, extra } = oidcConfiguration;
+
     const request = new TokenRequest({
-        client_id: oidcConfiguration.clientId,
-        redirect_uri: oidcConfiguration.callbackRedirectUri,
+        client_id: clientId,
+        redirect_uri: callbackRedirectUri,
         grant_type: GRANT_TYPE_REFRESH_TOKEN,
         code: undefined,
         refresh_token: refreshToken,
-        extras: undefined,
+        extras: extra,
     });
 
     logger('performWithFreshTokens', request);
